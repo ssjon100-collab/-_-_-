@@ -18,7 +18,7 @@ export const MortgageCalculator: React.FC = () => {
   };
 
   const estimatedTotal = basePriceMap[selectedUnitType];
-  const downPayment = 1000; // 계약금 1,000만원 정액제
+  const downPayment = 500; // 계약금 500만원 정액제
   const intermediatePayment = estimatedTotal * 0.6; // 중도금 60% (무이자)
   const loanPrincipal = (estimatedTotal * (loanRatio / 100)); // 잔금 대출 시 원금
 
@@ -54,7 +54,7 @@ export const MortgageCalculator: React.FC = () => {
             스마트 <span className={themeTokens.accentText}>분양가 & 자금 계획 계산기</span>
           </h2>
           <p className="mt-2 text-sm sm:text-base text-neutral-400">
-            계약금 1,000만원 정액제와 중도금 전액 무이자 혜택으로 자금 부담을 획기적으로 낮췄습니다.
+            계약금 500만원 정액제와 중도금 전액 무이자 혜택으로 자금 부담을 획기적으로 낮췄습니다.
           </p>
         </div>
 
@@ -185,7 +185,7 @@ export const MortgageCalculator: React.FC = () => {
                 <div className="flex justify-between items-center pb-2 border-b border-neutral-800/80">
                   <span className="text-neutral-400">초기 필요 계약금 (1차)</span>
                   <span className="font-extrabold text-white text-base">
-                    1,000만원 정액제
+                    500만원 정액제
                   </span>
                 </div>
 

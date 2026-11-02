@@ -11,7 +11,7 @@ export const DEFAULT_SITE_CONFIG: SiteConfig = {
   themeColor: "emerald",
   fontStyle: "modern",
   heroBadge: "선착순 로얄동·호수 지정 계약 진행 중",
-  announcementTicker: "★ 숭의역 도보 1분 초역세권 · 계약금 1,000만원 정액제 · 중도금 무이자 혜택 · 무제한 전매 가능 · 대표상담 1688-8768 ★",
+  announcementTicker: "★ 숭의역 도보 1분 초역세권 · 계약금 500만원 정액제 · 중도금 무이자 혜택 · 무제한 전매 가능 · 대표상담 1688-8768 ★",
   images: {
     hero: "/assets/aistudio/image_a8832a9e.png",
     birdview: "/src/assets/images/complex_birdview_1793524593100.jpg",
@@ -89,7 +89,7 @@ export const DEFAULT_PREMIUMS: PremiumFeature[] = [
   {
     id: "premium-6",
     number: "06",
-    title: "계약금 1,000만원 정액제 & 무이자",
+    title: "계약금 500만원 정액제 & 무이자",
     subtitle: "FINANCIAL BENEFIT",
     description: "초기 자금 부담을 덜어주는 계약금 정액제, 중도금 전액 무이자 혜택 제공 및 비규제지역 무제한 전매 가능.",
     tag: "금융혜택 특화",
@@ -183,7 +183,7 @@ export const DEFAULT_POSTS: Post[] = [
     content: `숭의역 유림 노르웨이숲더스카이가 많은 고객님들의 뜨거운 성원에 힘입어 잔여세대에 대한 선착순 동·호수 지정 계약을 진행합니다.
 
 ■ 계약 혜택 안내
-1. 계약금 1,000만원 정액제 (1차)
+1. 계약금 500만원 정액제 (1차)
 2. 중도금 전액 무이자 융자 지원
 3. 발코니 확장 무상 시공 프로모션 적용
 4. 즉시 전매 가능 (분양권 전매 제한 없음)

@@ -69,7 +69,7 @@ export const Hero: React.FC = () => {
             <span className="text-neutral-600" aria-hidden="true">/</span>
             <span className="font-medium text-white">중도금 전액 무이자</span>
             <span className="text-neutral-600" aria-hidden="true">/</span>
-            <span className="font-medium text-white">계약금 1,000만원 정액제</span>
+            <span className="font-medium text-white">계약금 500만원 정액제</span>
           </div>
 
           {/* Primary Action Zone */}
@@ -116,7 +116,7 @@ export const Hero: React.FC = () => {
           <div className="space-y-1">
             <div className="text-xs text-neutral-400 font-medium">금융 특별혜택</div>
             <div className={`text-lg sm:text-xl font-bold ${themeTokens.accentText} tracking-tight`}>중도금 무이자</div>
-            <div className="text-xs text-neutral-400">계약금 1,000만원 정액제</div>
+            <div className="text-xs text-neutral-400">계약금 500만원 정액제</div>
           </div>
         </div>
       </div>

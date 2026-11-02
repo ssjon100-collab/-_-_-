@@ -133,15 +133,17 @@ const THEME_MAP: Record<ThemeColor, ThemeTokens> = {
 };
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // 1. Site Config with hero image & phone updates
+  // 1. Site Config with hero image & phone & deposit updates
   const [siteConfig, setSiteConfig] = useState<SiteConfig>(() => {
-    const saved = localStorage.getItem('sungui_site_config_v3');
+    const saved = localStorage.getItem('sungui_site_config_v4') || localStorage.getItem('sungui_site_config_v3');
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
+        const ticker = (parsed.announcementTicker || DEFAULT_SITE_CONFIG.announcementTicker).replace(/1,?000만원/g, '500만원');
         return {
           ...DEFAULT_SITE_CONFIG,
           ...parsed,
+          announcementTicker: ticker,
           formspreeUrl: parsed.formspreeUrl || DEFAULT_SITE_CONFIG.formspreeUrl || 'https://formspree.io/f/mqppgapq',
         };
       } catch (e) {
@@ -158,10 +160,21 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return DEFAULT_PROJECT_OVERVIEW;
   });
 
-  // 3. Premiums
+  // 3. Premiums with 500만원 계약금 update
   const [premiums, setPremiums] = useState<PremiumFeature[]>(() => {
-    const saved = localStorage.getItem('sungui_premiums_v2');
-    if (saved) return JSON.parse(saved);
+    const saved = localStorage.getItem('sungui_premiums_v3') || localStorage.getItem('sungui_premiums_v2');
+    if (saved) {
+      try {
+        const parsed: PremiumFeature[] = JSON.parse(saved);
+        return parsed.map((item) => ({
+          ...item,
+          title: item.title.replace(/1,?000만원/g, '500만원'),
+          description: item.description.replace(/1,?000만원/g, '500만원'),
+        }));
+      } catch (e) {
+        return DEFAULT_PREMIUMS;
+      }
+    }
     return DEFAULT_PREMIUMS;
   });
 
@@ -172,10 +185,20 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return DEFAULT_UNITS;
   });
 
-  // 5. Posts
+  // 5. Posts with 500만원 계약금 update
   const [posts, setPosts] = useState<Post[]>(() => {
-    const saved = localStorage.getItem('sungui_posts_v2');
-    if (saved) return JSON.parse(saved);
+    const saved = localStorage.getItem('sungui_posts_v3') || localStorage.getItem('sungui_posts_v2');
+    if (saved) {
+      try {
+        const parsed: Post[] = JSON.parse(saved);
+        return parsed.map((post) => ({
+          ...post,
+          content: post.content.replace(/1,?000만원/g, '500만원'),
+        }));
+      } catch (e) {
+        return DEFAULT_POSTS;
+      }
+    }
     return DEFAULT_POSTS;
   });
 
@@ -204,7 +227,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // Sync to LocalStorage
   useEffect(() => {
-    localStorage.setItem('sungui_site_config_v3', JSON.stringify(siteConfig));
+    localStorage.setItem('sungui_site_config_v4', JSON.stringify(siteConfig));
   }, [siteConfig]);
 
   useEffect(() => {
@@ -212,7 +235,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   }, [projectOverview]);
 
   useEffect(() => {
-    localStorage.setItem('sungui_premiums_v2', JSON.stringify(premiums));
+    localStorage.setItem('sungui_premiums_v3', JSON.stringify(premiums));
   }, [premiums]);
 
   useEffect(() => {
@@ -220,7 +243,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   }, [units]);
 
   useEffect(() => {
-    localStorage.setItem('sungui_posts_v2', JSON.stringify(posts));
+    localStorage.setItem('sungui_posts_v3', JSON.stringify(posts));
   }, [posts]);
 
   useEffect(() => {

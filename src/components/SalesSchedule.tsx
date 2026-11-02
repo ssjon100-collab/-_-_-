@@ -90,7 +90,7 @@ export const SalesSchedule: React.FC = () => {
                 특별 계약 프로모션
               </h4>
               <ul className="space-y-1.5 text-xs text-neutral-400 leading-relaxed list-disc list-inside">
-                <li><strong className="text-neutral-200">계약금 1,000만원 정액제:</strong> 초기 목돈 부담 최소화</li>
+                <li><strong className="text-neutral-200">계약금 500만원 정액제:</strong> 초기 목돈 부담 최소화</li>
                 <li><strong className="text-neutral-200">중도금 전액 무이자:</strong> 입주 시까지 추가 이자비용 0원</li>
                 <li><strong className="text-neutral-200">분양권 즉시 전매:</strong> 무제한 전매 가능 (비규제 단지)</li>
                 <li><strong className="text-neutral-200">발코니 확장 무상 시공:</strong> 수천만원 상당 옵션 혜택 지원</li>
