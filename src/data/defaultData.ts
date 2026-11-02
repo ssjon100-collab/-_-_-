@@ -13,12 +13,13 @@ export const DEFAULT_SITE_CONFIG: SiteConfig = {
   heroBadge: "선착순 로얄동·호수 지정 계약 진행 중",
   announcementTicker: "★ 숭의역 도보 1분 초역세권 · 계약금 1,000만원 정액제 · 중도금 무이자 혜택 · 무제한 전매 가능 · 대표상담 1688-8768 ★",
   images: {
-    hero: "/src/assets/images/hero_apartment_skyline_1793524592974.jpg",
+    hero: "/assets/aistudio/image_a8832a9e.png",
     birdview: "/src/assets/images/complex_birdview_1793524593100.jpg",
     livingRoom: "/src/assets/images/interior_living_room_1793524594019.jpg",
     bedroom: "/src/assets/images/interior_bedroom_1793524594287.jpg",
     community: "/src/assets/images/community_lounge_1793524596684.jpg",
-  }
+  },
+  formspreeUrl: "https://formspree.io/f/mqppgapq",
 };
 
 export const DEFAULT_PROJECT_OVERVIEW: ProjectOverview = {
@@ -35,7 +36,7 @@ export const DEFAULT_PROJECT_OVERVIEW: ProjectOverview = {
     { label: "건폐율 / 용적률", value: "68.85% / 899.72%" },
     { label: "주차대수", value: "총 580대 (자주식 주차 및 전기차 충전스테이션)" },
     { label: "시행 / 시공사", value: "코리아신탁(주) / 유림E&C (노르웨이숲)" },
-    { label: "입주예정시기", value: "2027년 04월 예정" },
+    { label: "입주예정시기", value: "2030년 05월 예정" },
   ]
 };
 
@@ -314,7 +315,7 @@ export const DEFAULT_SCHEDULE_STEPS: ScheduleStep[] = [
   },
   {
     step: "04",
-    date: "2027.04 (예정)",
+    date: "2030.05 (예정)",
     title: "단지 준공 및 입주",
     description: "사전 점검 행사 진행 및 본격 입주 개시",
     status: "upcoming"
@@ -327,7 +328,7 @@ export const DEFAULT_SEO_CONFIG: SeoConfig = {
   metaKeywords: "숭의역유림노르웨이숲, 숭의역유림노르웨이숲더스카이, 숭의역아파트, 미추홀구분양, 69타입, 84타입, 84OA, 84OB, 1688-8768",
   ogTitle: "숭의역 유림 노르웨이숲더스카이 공식 분양상담 (1688-8768)",
   ogDescription: "수인분당선 숭의역 초역세권, 최고 40층 파노라마 뷰! 계약금 정액제 & 중도금 무이자. 대표문의 1688-8768",
-  ogImage: "/src/assets/images/hero_apartment_skyline_1793524592974.jpg",
+  ogImage: "/assets/aistudio/image_a8832a9e.png",
   canonicalUrl: "https://xn--o80b88an0jf4j1a99d07pp6by2aeid716s.com",
   naverVerification: "naver-site-verification-code-sungui",
   googleVerification: "google-site-verification-code-sungui"

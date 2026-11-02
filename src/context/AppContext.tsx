@@ -55,7 +55,7 @@ interface AppContextType {
   incrementPostView: (id: string) => void;
   
   leads: ConsultationLead[];
-  addLead: (lead: Omit<ConsultationLead, 'id' | 'createdAt' | 'status'>) => void;
+  addLead: (lead: Omit<ConsultationLead, 'id' | 'createdAt' | 'status'>) => Promise<boolean>;
   updateLeadStatus: (id: string, status: ConsultationLead['status']) => void;
   updateLeadMemo: (id: string, adminMemo: string) => void;
   deleteLead: (id: string) => void;
@@ -133,16 +133,27 @@ const THEME_MAP: Record<ThemeColor, ThemeTokens> = {
 };
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // 1. Site Config with migration to 1688-8768
+  // 1. Site Config with hero image & phone updates
   const [siteConfig, setSiteConfig] = useState<SiteConfig>(() => {
-    const saved = localStorage.getItem('sungui_site_config_v2');
-    if (saved) return JSON.parse(saved);
+    const saved = localStorage.getItem('sungui_site_config_v3');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        return {
+          ...DEFAULT_SITE_CONFIG,
+          ...parsed,
+          formspreeUrl: parsed.formspreeUrl || DEFAULT_SITE_CONFIG.formspreeUrl || 'https://formspree.io/f/mqppgapq',
+        };
+      } catch (e) {
+        return DEFAULT_SITE_CONFIG;
+      }
+    }
     return DEFAULT_SITE_CONFIG;
   });
 
-  // 2. Project Overview with migration
+  // 2. Project Overview with 2030년 05월 update
   const [projectOverview, setProjectOverview] = useState<ProjectOverview>(() => {
-    const saved = localStorage.getItem('sungui_project_overview_v2');
+    const saved = localStorage.getItem('sungui_project_overview_v3');
     if (saved) return JSON.parse(saved);
     return DEFAULT_PROJECT_OVERVIEW;
   });
@@ -180,7 +191,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return saved ? JSON.parse(saved) : DEFAULT_SEO_CONFIG;
   });
 
-  // Admin Auth State (Password: 1440)
+  // Admin Auth State
   const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState<boolean>(() => {
     return sessionStorage.getItem('sungui_admin_auth') === 'true';
@@ -193,11 +204,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // Sync to LocalStorage
   useEffect(() => {
-    localStorage.setItem('sungui_site_config_v2', JSON.stringify(siteConfig));
+    localStorage.setItem('sungui_site_config_v3', JSON.stringify(siteConfig));
   }, [siteConfig]);
 
   useEffect(() => {
-    localStorage.setItem('sungui_project_overview_v2', JSON.stringify(projectOverview));
+    localStorage.setItem('sungui_project_overview_v3', JSON.stringify(projectOverview));
   }, [projectOverview]);
 
   useEffect(() => {
@@ -300,7 +311,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     );
   };
 
-  const addLead = (lead: Omit<ConsultationLead, 'id' | 'createdAt' | 'status'>) => {
+  const addLead = async (lead: Omit<ConsultationLead, 'id' | 'createdAt' | 'status'>): Promise<boolean> => {
     const now = new Date();
     const formattedDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
     const newLead: ConsultationLead = {
@@ -310,6 +321,35 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       createdAt: formattedDate,
     };
     setLeads((prev) => [newLead, ...prev]);
+
+    // Transmit to Formspree endpoint (https://formspree.io/f/mqppgapq)
+    const formspreeEndpoint = siteConfig.formspreeUrl || 'https://formspree.io/f/mqppgapq';
+    try {
+      const response = await fetch(formspreeEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          성함: lead.name,
+          연락처: lead.phone,
+          추가문의사항: lead.notes || '없음',
+          접수일시: formattedDate,
+          사업지명: siteConfig.name,
+          현장위치: siteConfig.siteAddress,
+          // Formspree recognized attributes
+          name: lead.name,
+          phone: lead.phone,
+          message: lead.notes || '없음',
+          _subject: `[${siteConfig.name}] 신규 VIP 관심고객 상담신청: ${lead.name} (${lead.phone})`,
+        }),
+      });
+      return response.ok;
+    } catch (err) {
+      console.warn('Formspree transmission warning (saved locally):', err);
+      return false;
+    }
   };
 
   const updateLeadStatus = (id: string, status: ConsultationLead['status']) => {

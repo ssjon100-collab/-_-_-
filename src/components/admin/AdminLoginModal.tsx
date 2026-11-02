@@ -69,14 +69,9 @@ export const AdminLoginModal: React.FC = () => {
             </div>
             {error && (
               <p className="mt-1.5 text-xs text-red-400 flex items-center gap-1">
-                <AlertCircle className="w-3.5 h-3.5" /> 비밀번호가 일치하지 않습니다. (힌트: 1440)
+                <AlertCircle className="w-3.5 h-3.5" /> 비밀번호가 일치하지 않습니다.
               </p>
             )}
-          </div>
-
-          <div className="p-2.5 rounded bg-neutral-950/80 border border-neutral-800 text-[11px] text-neutral-400 flex items-center justify-between">
-            <span>설정된 기본 비밀번호:</span>
-            <span className="font-mono font-bold text-amber-400">1440</span>
           </div>
 
           <button

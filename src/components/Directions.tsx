@@ -36,7 +36,7 @@ export const Directions: React.FC = () => {
                   신축 공사현장 (Site)
                 </span>
                 <span className="text-xs text-neutral-400 flex items-center gap-1">
-                  <Clock className="w-3.5 h-3.5" /> 2027년 04월 준공예정
+                  <Clock className="w-3.5 h-3.5" /> 2030년 05월 준공예정
                 </span>
               </div>
 

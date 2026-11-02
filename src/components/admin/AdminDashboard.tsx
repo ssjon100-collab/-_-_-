@@ -64,7 +64,7 @@ export const AdminDashboard: React.FC = () => {
             </h1>
           </div>
           <span className="hidden sm:inline text-xs px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800 font-semibold">
-            관리자 인증됨 (PW: 1440)
+            관리자 인증됨
           </span>
         </div>
 

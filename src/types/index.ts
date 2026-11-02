@@ -22,6 +22,7 @@ export interface SiteConfig {
   heroBadge: string;
   announcementTicker: string;
   images: SiteImages;
+  formspreeUrl?: string;
 }
 
 export interface ProjectOverviewItem {
@@ -75,10 +76,10 @@ export interface ConsultationLead {
   id: string;
   name: string;
   phone: string;
-  preferredType: string;
-  visitDate: string;
-  visitTime: string;
-  visitPurpose: string;
+  preferredType?: string;
+  visitDate?: string;
+  visitTime?: string;
+  visitPurpose?: string;
   notes?: string;
   status: '접수완료' | '상담대기' | '방문예약' | '상담완료';
   createdAt: string;

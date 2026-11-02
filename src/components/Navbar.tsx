@@ -73,7 +73,7 @@ export const Navbar: React.FC = () => {
             <button
               onClick={() => setIsAdminModalOpen(true)}
               className="p-1.5 rounded text-neutral-400 hover:text-white hover:bg-neutral-800/60 transition-colors"
-              title="관리자 대시보드 로그인 (비밀번호: 1440)"
+              title="관리자 로그인"
               aria-label="관리자 로그인"
             >
               <Lock className="w-4 h-4" />

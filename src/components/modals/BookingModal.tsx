@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
-import { X, CheckCircle2, User, Phone, Calendar, Clock, AlertCircle } from 'lucide-react';
+import { X, CheckCircle2, User, Phone, AlertCircle } from 'lucide-react';
 
 export const BookingModal: React.FC = () => {
   const {
     isBookingModalOpen,
     setIsBookingModalOpen,
-    selectedUnitForModal,
     setSelectedUnitForModal,
     themeTokens,
     siteConfig,
@@ -15,18 +14,9 @@ export const BookingModal: React.FC = () => {
 
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [preferredType, setPreferredType] = useState(
-    selectedUnitForModal ? selectedUnitForModal.name : '84'
-  );
-  const [visitDate, setVisitDate] = useState(() => {
-    const d = new Date();
-    d.setDate(d.getDate() + 1);
-    return d.toISOString().split('T')[0];
-  });
-  const [visitTime, setVisitTime] = useState('14:00');
-  const [visitPurpose, setVisitPurpose] = useState('실거주');
   const [notes, setNotes] = useState('');
   const [agreed, setAgreed] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -49,8 +39,9 @@ export const BookingModal: React.FC = () => {
     setIsSubmitted(false);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
     setErrorMsg('');
 
     if (!name.trim()) {
@@ -66,17 +57,17 @@ export const BookingModal: React.FC = () => {
       return;
     }
 
-    addLead({
-      name: name.trim(),
-      phone: phone.trim(),
-      preferredType,
-      visitDate,
-      visitTime,
-      visitPurpose,
-      notes: notes.trim(),
-    });
-
-    setIsSubmitted(true);
+    setIsSubmitting(true);
+    try {
+      await addLead({
+        name: name.trim(),
+        phone: phone.trim(),
+        notes: notes.trim(),
+      });
+      setIsSubmitted(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -102,11 +93,10 @@ export const BookingModal: React.FC = () => {
             <p className="text-xs sm:text-sm text-neutral-300">
               <strong className="text-white">{name}</strong> 님, 감사합니다.
               <br />
-              담당 상담사가 배정되어 예약 확인 연락을 드립니다.
+              담당 전문 상담사가 배정되어 남겨주신 연락처로 신속히 안내 전화를 드립니다.
             </p>
             <div className="p-3 bg-neutral-950 rounded-lg text-xs text-neutral-400 text-left space-y-1">
-              <div>· 상담일시: {visitDate} {visitTime}</div>
-              <div>· 선택타입: {preferredType}</div>
+              <div>· 신청 고객: {name} ({phone})</div>
               <div>· 사업현장: {siteConfig.siteAddress}</div>
             </div>
             <button
@@ -173,63 +163,15 @@ export const BookingModal: React.FC = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-xs font-semibold text-neutral-300 mb-1">
-                    희망 타입
-                  </label>
-                  <select
-                    value={preferredType}
-                    onChange={(e) => setPreferredType(e.target.value)}
-                    className="w-full bg-neutral-950 border border-neutral-700 rounded-lg px-2.5 py-2 text-xs text-white focus:outline-none"
-                  >
-                    <option value="69">69 (아파트 216세대)</option>
-                    <option value="84">84 (아파트 108세대)</option>
-                    <option value="84OA">84OA (오피스텔 72실)</option>
-                    <option value="84OB">84OB (오피스텔 36실)</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-semibold text-neutral-300 mb-1">
-                    방문 시간
-                  </label>
-                  <select
-                    value={visitTime}
-                    onChange={(e) => setVisitTime(e.target.value)}
-                    className="w-full bg-neutral-950 border border-neutral-700 rounded-lg px-2.5 py-2 text-xs text-white focus:outline-none"
-                  >
-                    <option value="10:00">오전 10:00</option>
-                    <option value="11:30">오전 11:30</option>
-                    <option value="13:00">오후 01:00</option>
-                    <option value="14:00">오후 02:00</option>
-                    <option value="15:30">오후 03:30</option>
-                    <option value="17:00">오후 05:00</option>
-                  </select>
-                </div>
-              </div>
-
               <div>
                 <label className="block text-xs font-semibold text-neutral-300 mb-1">
-                  방문 희망 일자
-                </label>
-                <input
-                  type="date"
-                  value={visitDate}
-                  onChange={(e) => setVisitDate(e.target.value)}
-                  className="w-full bg-neutral-950 border border-neutral-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold text-neutral-300 mb-1">
-                  문의 및 요청사항
+                  문의 및 요청사항 (선택사항)
                 </label>
                 <input
                   type="text"
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
-                  placeholder="예: 40층 이상 호수 상담 희망"
+                  placeholder="예: 선호 동호수 또는 상담 문의사항"
                   className="w-full bg-neutral-950 border border-neutral-700 rounded-lg px-3 py-2 text-xs text-white placeholder-neutral-500 focus:outline-none"
                 />
               </div>
@@ -251,9 +193,17 @@ export const BookingModal: React.FC = () => {
             <div className="pt-2">
               <button
                 type="submit"
-                className={`w-full py-3 text-xs font-bold text-white rounded-lg transition-all shadow ${themeTokens.accentBg} ${themeTokens.accentHoverBg}`}
+                disabled={isSubmitting}
+                className={`w-full py-3 text-xs font-bold text-white rounded-lg transition-all shadow ${themeTokens.accentBg} ${themeTokens.accentHoverBg} disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2`}
               >
-                예약 접수하기
+                {isSubmitting ? (
+                  <>
+                    <div className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    <span>상담 신청 데이터 전송 중...</span>
+                  </>
+                ) : (
+                  '예약 접수하기'
+                )}
               </button>
             </div>
           </form>

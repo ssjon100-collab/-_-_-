@@ -10,18 +10,18 @@ export const Hero: React.FC = () => {
       {/* Background Photography with measured contrast scrim */}
       <div className="absolute inset-0 z-0">
         <img
-          src={siteConfig.images.hero}
-          alt={`${siteConfig.name} 외관 투시도`}
-          className="w-full h-full object-cover object-center filter brightness-[0.72] contrast-[1.08]"
+          src={siteConfig.images.hero || "/assets/aistudio/image_a8832a9e.png"}
+          alt={`${siteConfig.name} 조감도`}
+          className="w-full h-full object-cover object-center filter brightness-[0.82] contrast-[1.06] saturate-[1.08]"
           referrerPolicy="no-referrer"
           onError={(e) => {
-            // Elegant CSS fallback if image load fails
-            e.currentTarget.style.display = 'none';
+            e.currentTarget.src = "/assets/aistudio/image_a8832a9e.png";
           }}
         />
-        {/* Measured dark gradient overlay for WCAG AA readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/60 to-neutral-950/40" />
-        <div className="absolute inset-0 bg-radial-at-c from-transparent via-neutral-950/30 to-neutral-950/80" />
+        {/* Harmonious ambient color grading & contrast scrim */}
+        <div className="absolute inset-0 bg-emerald-950/15 mix-blend-multiply pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/60 to-neutral-950/35" />
+        <div className="absolute inset-0 bg-gradient-to-r from-neutral-950/90 via-neutral-950/45 to-transparent" />
       </div>
 
       {/* Top Announcement Ticker */}

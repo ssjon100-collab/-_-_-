@@ -14,7 +14,8 @@ export const AdminLeadsTab: React.FC = () => {
     const matchesSearch =
       lead.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       lead.phone.includes(searchTerm) ||
-      lead.preferredType.toLowerCase().includes(searchTerm.toLowerCase());
+      (lead.notes || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (lead.preferredType || '').toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = statusFilter === 'all' || lead.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
@@ -25,10 +26,10 @@ export const AdminLeadsTab: React.FC = () => {
       `"${l.createdAt}"`,
       `"${l.name}"`,
       `"${l.phone}"`,
-      `"${l.preferredType}"`,
-      `"${l.visitDate}"`,
-      `"${l.visitTime}"`,
-      `"${l.visitPurpose}"`,
+      `"${l.preferredType || '-'}"`,
+      `"${l.visitDate || '-'}"`,
+      `"${l.visitTime || '-'}"`,
+      `"${l.visitPurpose || '-'}"`,
       `"${l.status}"`,
       `"${(l.notes || '').replace(/"/g, '""')}"`,
       `"${(l.adminMemo || '').replace(/"/g, '""')}"`,
@@ -55,11 +56,17 @@ export const AdminLeadsTab: React.FC = () => {
       {/* Top Bar with Stats & Export */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-neutral-900 p-5 rounded-2xl border border-neutral-800">
         <div>
-          <h3 className="text-base font-bold text-white">
-            관심고객 및 방문예약 실시간 접수 현황
-          </h3>
+          <div className="flex flex-wrap items-center gap-2 mb-1">
+            <h3 className="text-base font-bold text-white">
+              관심고객 및 방문예약 실시간 접수 현황
+            </h3>
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-950/80 text-emerald-400 border border-emerald-800/80">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              Formspree 실시간 수집 활성화
+            </span>
+          </div>
           <p className="text-xs text-neutral-400 mt-0.5">
-            총 <strong className="text-emerald-400 font-bold tabular-nums">{leads.length}</strong>건의 접수 내역이 데이터베이스에 등록되어 있습니다.
+            총 <strong className="text-emerald-400 font-bold tabular-nums">{leads.length}</strong>건의 접수 내역 (신규 신청 시 <a href="https://formspree.io/f/mqppgapq" target="_blank" rel="noreferrer" className="text-emerald-400 underline hover:text-emerald-300">Formspree</a>로 동시 전송 수집)
           </p>
         </div>
 
@@ -139,15 +146,19 @@ export const AdminLeadsTab: React.FC = () => {
                       {lead.phone}
                     </td>
                     <td className="py-3 px-4 whitespace-nowrap">
-                      <span className="px-2 py-0.5 rounded bg-neutral-800 text-neutral-200">
-                        {lead.preferredType}
-                      </span>
+                      {lead.preferredType ? (
+                        <span className="px-2 py-0.5 rounded bg-neutral-800 text-neutral-200">
+                          {lead.preferredType}
+                        </span>
+                      ) : (
+                        <span className="text-neutral-500">-</span>
+                      )}
                     </td>
                     <td className="py-3 px-4 whitespace-nowrap text-neutral-200 tabular-nums">
-                      {lead.visitDate} {lead.visitTime}
+                      {lead.visitDate ? `${lead.visitDate} ${lead.visitTime || ''}`.trim() : '-'}
                     </td>
                     <td className="py-3 px-4 whitespace-nowrap text-neutral-400">
-                      {lead.visitPurpose}
+                      {lead.visitPurpose || '-'}
                     </td>
                     <td className="py-3 px-4 whitespace-nowrap">
                       <select
