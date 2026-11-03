@@ -245,7 +245,7 @@ export const AdminThemeTab: React.FC = () => {
 
           <div>
             <label className="block text-xs font-semibold text-neutral-300 mb-1">
-              ⑤ 스카이 라운지 & 커뮤니티 클럽 이미지 URL / 경로
+              ⑤ 입주민 커뮤니티 클럽 이미지 URL / 경로
             </label>
             <input
               type="text"

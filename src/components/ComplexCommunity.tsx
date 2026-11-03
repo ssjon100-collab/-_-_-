@@ -1,18 +1,12 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { Sparkles, Users, Coffee, Dumbbell, BookOpen, Trees } from 'lucide-react';
+import { Dumbbell, BookOpen, Trees } from 'lucide-react';
 
 export const ComplexCommunity: React.FC = () => {
   const { siteConfig, themeTokens } = useApp();
-  const [activeTab, setActiveTab] = useState<'lounge' | 'living' | 'bedroom'>('lounge');
+  const [activeTab, setActiveTab] = useState<'community' | 'living' | 'bedroom'>('community');
 
   const facilities = [
-    {
-      title: "40층 스카이라운지",
-      subtitle: "SKY LOUNGE",
-      icon: Sparkles,
-      desc: "인천항 앞바다의 낙조와 도심 야경을 파노라마로 감상하는 고품격 휴식 공간",
-    },
     {
       title: "피트니스 & GX룸",
       subtitle: "WELLNESS CENTER",
@@ -54,14 +48,14 @@ export const ComplexCommunity: React.FC = () => {
         {/* Tab Controls (Functional buttons for interactive photo switching) */}
         <div className="flex items-center gap-2 p-1.5 bg-neutral-950 rounded-xl border border-neutral-800 w-fit mb-8">
           <button
-            onClick={() => setActiveTab('lounge')}
+            onClick={() => setActiveTab('community')}
             className={`px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-colors whitespace-nowrap ${
-              activeTab === 'lounge'
+              activeTab === 'community'
                 ? `${themeTokens.accentBg} text-white shadow`
                 : 'text-neutral-400 hover:text-white'
             }`}
           >
-            스카이 라운지 & 커뮤니티
+            입주민 커뮤니티 클럽
           </button>
           <button
             onClick={() => setActiveTab('living')}
@@ -89,7 +83,7 @@ export const ComplexCommunity: React.FC = () => {
         <div className="relative rounded-2xl overflow-hidden border border-neutral-800 shadow-2xl bg-neutral-950 aspect-[16/9] max-h-[580px] group">
           <img
             src={
-              activeTab === 'lounge'
+              activeTab === 'community'
                 ? siteConfig.images.community
                 : activeTab === 'living'
                 ? siteConfig.images.livingRoom
@@ -104,11 +98,11 @@ export const ComplexCommunity: React.FC = () => {
           <div className="absolute bottom-6 left-6 right-6 flex flex-col sm:flex-row sm:items-end justify-between gap-3 text-white">
             <div>
               <div className="text-xs uppercase tracking-wider text-neutral-300 font-medium">
-                {activeTab === 'lounge' ? 'CLUB NORWEGIAN' : 'INTERIOR SHOWROOM'}
+                {activeTab === 'community' ? 'COMMUNITY CLUB' : 'INTERIOR SHOWROOM'}
               </div>
               <h3 className="text-xl sm:text-2xl font-bold mt-1">
-                {activeTab === 'lounge'
-                  ? '입주민 전용 럭셔리 스카이 라운지 & 웰니스 센터'
+                {activeTab === 'community'
+                  ? '입주민을 위한 고품격 피트니스 & 커뮤니티 클럽'
                   : activeTab === 'living'
                   ? '대형 통창으로 펼쳐지는 파노라마 오션 & 시티뷰 거실'
                   : '호텔 스위트룸 감성의 마스터 침실 & 드레스룸 공간'}
@@ -120,8 +114,8 @@ export const ComplexCommunity: React.FC = () => {
           </div>
         </div>
 
-        {/* 4 Feature Facility Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+        {/* 3 Feature Facility Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
           {facilities.map((fac, idx) => {
             const Icon = fac.icon;
             return (

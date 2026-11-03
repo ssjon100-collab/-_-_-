@@ -11,6 +11,27 @@ export const UnitFloorplans: React.FC = () => {
 
   const currentUnit = units.find((u) => u.id === selectedUnitId) || units[0];
 
+  const getUnitFallbackImage = (unitId: string) => {
+    if (unitId === 'unit-84ob') {
+      return '/assets/aistudio/_____2026-11-03_120737_c692989d.png';
+    }
+    if (unitId === 'unit-84oa') {
+      return '/assets/aistudio/_____2026-11-03_120557_82219e62.png';
+    }
+    if (unitId === 'unit-84') {
+      return '/assets/aistudio/image_60db7b4f.png';
+    }
+    return '/assets/aistudio/image_8adfebdc.png';
+  };
+
+  const getDisplayImage = (unit: UnitType, mode: 'plan' | 'iso') => {
+    const raw = mode === 'plan' ? unit.planImage : unit.isoImage;
+    if (raw && !raw.includes('/src/assets/images/units/')) {
+      return raw;
+    }
+    return getUnitFallbackImage(unit.id);
+  };
+
   const handleBookUnit = (unit: UnitType) => {
     setSelectedUnitForModal(unit);
     setIsBookingModalOpen(true);
@@ -104,16 +125,19 @@ export const UnitFloorplans: React.FC = () => {
                 {/* Exact High-Resolution Reference Image Viewport */}
                 <div className="relative bg-white rounded-xl p-2 sm:p-4 border border-neutral-800/80 aspect-[4/3] flex items-center justify-center overflow-hidden group">
                   <img
-                    src={
-                      viewMode === 'plan'
-                        ? currentUnit.planImage || `/src/assets/images/units/unit_${currentUnit.name.toLowerCase()}.jpg`
-                        : currentUnit.isoImage || `/src/assets/images/units/unit_iso_${currentUnit.name.toLowerCase()}.png`
-                    }
+                    src={getDisplayImage(currentUnit, viewMode)}
                     alt={`${siteConfig.name} ${currentUnit.name} ${viewMode === 'plan' ? '평면도' : '3D 아이소'}`}
                     className={`max-w-full max-h-full ${
                       viewMode === 'plan' ? 'object-contain' : 'object-contain filter drop-shadow-md'
                     } transition-transform duration-300 group-hover:scale-[1.02]`}
                     referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      const target = e.currentTarget;
+                      const fallback = getUnitFallbackImage(currentUnit.id);
+                      if (!target.src.includes(fallback)) {
+                        target.src = fallback;
+                      }
+                    }}
                   />
 
                   {/* Enlarge / Fullscreen Zoom Button */}
@@ -227,13 +251,16 @@ export const UnitFloorplans: React.FC = () => {
 
               <div className="flex-1 overflow-auto p-4 flex items-center justify-center bg-white rounded-xl mt-3">
                 <img
-                  src={
-                    viewMode === 'plan'
-                      ? currentUnit.planImage || `/src/assets/images/units/unit_${currentUnit.name.toLowerCase()}.jpg`
-                      : currentUnit.isoImage || `/src/assets/images/units/unit_iso_${currentUnit.name.toLowerCase()}.png`
-                  }
+                  src={getDisplayImage(currentUnit, viewMode)}
                   alt={`${currentUnit.name} 평면도`}
                   className="max-w-full max-h-[75vh] object-contain"
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    const fallback = getUnitFallbackImage(currentUnit.id);
+                    if (!target.src.includes(fallback)) {
+                      target.src = fallback;
+                    }
+                  }}
                 />
               </div>
 

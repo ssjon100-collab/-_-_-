@@ -27,7 +27,7 @@ export const ProjectOverview: React.FC = () => {
           <div className="lg:col-span-5 flex flex-col justify-between">
             <div className="relative rounded-2xl overflow-hidden border border-neutral-800 shadow-xl group h-full min-h-[360px] bg-neutral-950">
               <img
-                src={siteConfig.images.birdview}
+                src={siteConfig.images.birdview || "/assets/aistudio/image_4b41780d.png"}
                 alt={`${siteConfig.name} 단지 조감도`}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 referrerPolicy="no-referrer"

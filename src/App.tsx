@@ -6,7 +6,6 @@ import { ProjectOverview } from './components/ProjectOverview';
 import { LocationPremiums } from './components/LocationPremiums';
 import { ComplexCommunity } from './components/ComplexCommunity';
 import { UnitFloorplans } from './components/UnitFloorplans';
-import { MortgageCalculator } from './components/MortgageCalculator';
 import { SalesSchedule } from './components/SalesSchedule';
 import { NewsBoard } from './components/NewsBoard';
 import { ReservationSection } from './components/ReservationSection';
@@ -36,7 +35,6 @@ const MainLayout: React.FC = () => {
         <LocationPremiums />
         <ComplexCommunity />
         <UnitFloorplans />
-        <MortgageCalculator />
         <SalesSchedule />
         <NewsBoard />
         <ReservationSection />

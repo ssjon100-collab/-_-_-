@@ -133,9 +133,12 @@ const THEME_MAP: Record<ThemeColor, ThemeTokens> = {
 };
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // 1. Site Config with hero image & phone & deposit updates
+  // 1. Site Config with hero/birdview images & phone & deposit updates
   const [siteConfig, setSiteConfig] = useState<SiteConfig>(() => {
-    const saved = localStorage.getItem('sungui_site_config_v4') || localStorage.getItem('sungui_site_config_v3');
+    const saved =
+      localStorage.getItem('sungui_site_config_v5') ||
+      localStorage.getItem('sungui_site_config_v4') ||
+      localStorage.getItem('sungui_site_config_v3');
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
@@ -144,6 +147,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           ...DEFAULT_SITE_CONFIG,
           ...parsed,
           announcementTicker: ticker,
+          images: {
+            ...DEFAULT_SITE_CONFIG.images,
+            ...(parsed.images || {}),
+            birdview:
+              !parsed.images?.birdview || parsed.images.birdview.includes('complex_birdview')
+                ? '/assets/aistudio/image_4b41780d.png'
+                : parsed.images.birdview,
+          },
           formspreeUrl: parsed.formspreeUrl || DEFAULT_SITE_CONFIG.formspreeUrl || 'https://formspree.io/f/mqppgapq',
         };
       } catch (e) {
@@ -180,8 +191,51 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // 4. Units (Exact reference website types: 69, 84, 84OA, 84OB)
   const [units, setUnits] = useState<UnitType[]>(() => {
-    const saved = localStorage.getItem('sungui_units_v2');
-    if (saved) return JSON.parse(saved);
+    const saved =
+      localStorage.getItem('sungui_units_v7') ||
+      localStorage.getItem('sungui_units_v6') ||
+      localStorage.getItem('sungui_units_v5') ||
+      localStorage.getItem('sungui_units_v4') ||
+      localStorage.getItem('sungui_units_v3') ||
+      localStorage.getItem('sungui_units_v2');
+    if (saved) {
+      try {
+        const parsed: UnitType[] = JSON.parse(saved);
+        return parsed.map((u) => {
+          if (u.id === 'unit-69') {
+            return {
+              ...u,
+              planImage: '/assets/aistudio/image_8adfebdc.png',
+              isoImage: '/assets/aistudio/image_8adfebdc.png',
+            };
+          }
+          if (u.id === 'unit-84') {
+            return {
+              ...u,
+              planImage: '/assets/aistudio/image_60db7b4f.png',
+              isoImage: '/assets/aistudio/image_60db7b4f.png',
+            };
+          }
+          if (u.id === 'unit-84oa') {
+            return {
+              ...u,
+              planImage: '/assets/aistudio/_____2026-11-03_120557_82219e62.png',
+              isoImage: '/assets/aistudio/_____2026-11-03_120557_82219e62.png',
+            };
+          }
+          if (u.id === 'unit-84ob') {
+            return {
+              ...u,
+              planImage: '/assets/aistudio/_____2026-11-03_120737_c692989d.png',
+              isoImage: '/assets/aistudio/_____2026-11-03_120737_c692989d.png',
+            };
+          }
+          return u;
+        });
+      } catch (e) {
+        return DEFAULT_UNITS;
+      }
+    }
     return DEFAULT_UNITS;
   });
 
@@ -227,7 +281,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // Sync to LocalStorage
   useEffect(() => {
-    localStorage.setItem('sungui_site_config_v4', JSON.stringify(siteConfig));
+    localStorage.setItem('sungui_site_config_v5', JSON.stringify(siteConfig));
   }, [siteConfig]);
 
   useEffect(() => {
@@ -239,7 +293,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   }, [premiums]);
 
   useEffect(() => {
-    localStorage.setItem('sungui_units_v2', JSON.stringify(units));
+    localStorage.setItem('sungui_units_v7', JSON.stringify(units));
   }, [units]);
 
   useEffect(() => {

@@ -14,7 +14,7 @@ export const DEFAULT_SITE_CONFIG: SiteConfig = {
   announcementTicker: "★ 숭의역 도보 1분 초역세권 · 계약금 500만원 정액제 · 중도금 무이자 혜택 · 무제한 전매 가능 · 대표상담 1688-8768 ★",
   images: {
     hero: "/assets/aistudio/image_a8832a9e.png",
-    birdview: "/src/assets/images/complex_birdview_1793524593100.jpg",
+    birdview: "/assets/aistudio/image_4b41780d.png",
     livingRoom: "/src/assets/images/interior_living_room_1793524594019.jpg",
     bedroom: "/src/assets/images/interior_bedroom_1793524594287.jpg",
     community: "/src/assets/images/community_lounge_1793524596684.jpg",
@@ -114,8 +114,8 @@ export const DEFAULT_UNITS: UnitType[] = [
     ],
     description: "실속과 채광을 극대화한 맞통풍 판상형 구조로 3~4인 가구에 최적화된 아파트 대표 주력 타입(총 216세대)입니다.",
     isPopular: true,
-    planImage: "/src/assets/images/units/unit_69.jpg",
-    isoImage: "/src/assets/images/units/unit_iso_69.png"
+    planImage: "/assets/aistudio/image_8adfebdc.png",
+    isoImage: "/assets/aistudio/image_8adfebdc.png"
   },
   {
     id: "unit-84",
@@ -133,8 +133,8 @@ export const DEFAULT_UNITS: UnitType[] = [
     ],
     description: "탁월한 개방감과 럭셔리 마감재가 조화를 이루는 최고급 아파트 타입(총 108세대)으로 품격 높은 주거공간을 제공합니다.",
     isPopular: true,
-    planImage: "/src/assets/images/units/unit_84.jpg",
-    isoImage: "/src/assets/images/units/unit_iso_84.png"
+    planImage: "/assets/aistudio/image_60db7b4f.png",
+    isoImage: "/assets/aistudio/image_60db7b4f.png"
   },
   {
     id: "unit-84oa",
@@ -152,8 +152,8 @@ export const DEFAULT_UNITS: UnitType[] = [
     ],
     description: "아파트 84㎡와 동일한 평면 활용성을 선사하는 고품격 주거형 오피스텔 A타입(총 72실)입니다.",
     isPopular: true,
-    planImage: "/src/assets/images/units/unit_84oa.jpg",
-    isoImage: "/src/assets/images/units/unit_iso_84oa.png"
+    planImage: "/assets/aistudio/_____2026-11-03_120557_82219e62.png",
+    isoImage: "/assets/aistudio/_____2026-11-03_120557_82219e62.png"
   },
   {
     id: "unit-84ob",
@@ -170,8 +170,8 @@ export const DEFAULT_UNITS: UnitType[] = [
       "풀퍼니시드 가전 빌트인 무상 옵션 적용"
     ],
     description: "감각적인 공간 배치와 아름다운 스카이라인 조망을 선사하는 주거형 오피스텔 B타입(총 36실)입니다.",
-    planImage: "/src/assets/images/units/unit_84ob.jpg",
-    isoImage: "/src/assets/images/units/unit_iso_84ob.png"
+    planImage: "/assets/aistudio/_____2026-11-03_120737_c692989d.png",
+    isoImage: "/assets/aistudio/_____2026-11-03_120737_c692989d.png"
   }
 ];
 
