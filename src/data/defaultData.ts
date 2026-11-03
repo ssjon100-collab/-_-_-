@@ -15,9 +15,9 @@ export const DEFAULT_SITE_CONFIG: SiteConfig = {
   images: {
     hero: "/assets/aistudio/image_a8832a9e.png",
     birdview: "/assets/aistudio/image_4b41780d.png",
-    livingRoom: "/src/assets/images/interior_living_room_1793524594019.jpg",
-    bedroom: "/src/assets/images/interior_bedroom_1793524594287.jpg",
-    community: "/src/assets/images/community_lounge_1793524596684.jpg",
+    livingRoom: "/assets/images/interior_living_room_1793524594019.jpg",
+    bedroom: "/assets/images/interior_bedroom_1793524594287.jpg",
+    community: "/assets/images/community_lounge_1793524596684.jpg",
   },
   formspreeUrl: "https://formspree.io/f/mqppgapq",
 };

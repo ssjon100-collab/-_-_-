@@ -136,6 +136,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   // 1. Site Config with hero/birdview images & phone & deposit updates
   const [siteConfig, setSiteConfig] = useState<SiteConfig>(() => {
     const saved =
+      localStorage.getItem('sungui_site_config_v6') ||
       localStorage.getItem('sungui_site_config_v5') ||
       localStorage.getItem('sungui_site_config_v4') ||
       localStorage.getItem('sungui_site_config_v3');
@@ -143,6 +144,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       try {
         const parsed = JSON.parse(saved);
         const ticker = (parsed.announcementTicker || DEFAULT_SITE_CONFIG.announcementTicker).replace(/1,?000만원/g, '500만원');
+        const cleanPath = (p?: string, fallback: string = '') => {
+          if (!p) return fallback;
+          return p.replace(/^\/src\/assets\//, '/assets/');
+        };
         return {
           ...DEFAULT_SITE_CONFIG,
           ...parsed,
@@ -153,7 +158,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
             birdview:
               !parsed.images?.birdview || parsed.images.birdview.includes('complex_birdview')
                 ? '/assets/aistudio/image_4b41780d.png'
-                : parsed.images.birdview,
+                : cleanPath(parsed.images.birdview, DEFAULT_SITE_CONFIG.images.birdview),
+            livingRoom: cleanPath(parsed.images?.livingRoom, DEFAULT_SITE_CONFIG.images.livingRoom),
+            bedroom: cleanPath(parsed.images?.bedroom, DEFAULT_SITE_CONFIG.images.bedroom),
+            community: cleanPath(parsed.images?.community, DEFAULT_SITE_CONFIG.images.community),
+            hero: cleanPath(parsed.images?.hero, DEFAULT_SITE_CONFIG.images.hero),
           },
           formspreeUrl: parsed.formspreeUrl || DEFAULT_SITE_CONFIG.formspreeUrl || 'https://formspree.io/f/mqppgapq',
         };
@@ -281,7 +290,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // Sync to LocalStorage
   useEffect(() => {
-    localStorage.setItem('sungui_site_config_v5', JSON.stringify(siteConfig));
+    localStorage.setItem('sungui_site_config_v6', JSON.stringify(siteConfig));
   }, [siteConfig]);
 
   useEffect(() => {

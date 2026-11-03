@@ -27,6 +27,14 @@ export const ComplexCommunity: React.FC = () => {
     },
   ];
 
+  const getTabImage = (tab: 'community' | 'living' | 'bedroom') => {
+    let src = '';
+    if (tab === 'community') src = siteConfig.images.community || '/assets/images/community_lounge_1793524596684.jpg';
+    else if (tab === 'living') src = siteConfig.images.livingRoom || '/assets/images/interior_living_room_1793524594019.jpg';
+    else src = siteConfig.images.bedroom || '/assets/images/interior_bedroom_1793524594287.jpg';
+    return src.replace(/^\/src\/assets\//, '/assets/');
+  };
+
   return (
     <section id="complex" className="py-24 bg-neutral-900 border-b border-neutral-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -82,16 +90,16 @@ export const ComplexCommunity: React.FC = () => {
         {/* Interactive Media Viewport */}
         <div className="relative rounded-2xl overflow-hidden border border-neutral-800 shadow-2xl bg-neutral-950 aspect-[16/9] max-h-[580px] group">
           <img
-            src={
-              activeTab === 'community'
-                ? siteConfig.images.community
-                : activeTab === 'living'
-                ? siteConfig.images.livingRoom
-                : siteConfig.images.bedroom
-            }
+            src={getTabImage(activeTab)}
             alt="커뮤니티 및 인테리어 투시도"
             className="w-full h-full object-cover transition-all duration-500"
             referrerPolicy="no-referrer"
+            onError={(e) => {
+              const target = e.currentTarget;
+              if (target.src.includes('/src/assets/')) {
+                target.src = target.src.replace('/src/assets/', '/assets/');
+              }
+            }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/80 via-transparent to-transparent pointer-events-none" />
           
