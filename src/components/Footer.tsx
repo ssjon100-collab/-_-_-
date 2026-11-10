@@ -37,9 +37,10 @@ export const Footer: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-neutral-400 leading-relaxed">
           <div className="space-y-1">
-            <p><strong>단지명:</strong> {siteConfig.name} | <strong>분양문의:</strong> {siteConfig.phone}</p>
+            <p><strong>단지명:</strong> {siteConfig.name}</p>
             <p><strong>시행사:</strong> 코리아신탁(주) | <strong>시공사:</strong> 유림E&C (노르웨이숲)</p>
             <p><strong>사업현장:</strong> {siteConfig.siteAddress}</p>
+            <p><strong>사이트운영자 :</strong> 김승식 | <strong>문의 :</strong> {siteConfig.phone}</p>
           </div>
 
           <div className="text-neutral-400 text-[11px] leading-relaxed">
